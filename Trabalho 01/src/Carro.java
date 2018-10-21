@@ -1,7 +1,7 @@
 
-//AvoidPublicFields
+//AvoidPublicFields OK
 //DontReturnMutableCollectionsOrArrays
-//AvoidUncheckedParametersOfSetters
+//AvoidUncheckedParametersOfSetters OK
 //UseInterfacesAsReturnType
 //AvoidProtectedFields
 //AvoidSettersForHeavilyUsedFields
@@ -17,48 +17,155 @@
 import java.time.LocalDate;
 
 public class Carro {
-	private int anoFabricacao, anoModelo, portaMala;
-	private double precoCompra, precoVenda, tanque;
+	private int anoModelo;
+	private double precoCompra, precoVenda, tanque, nivelCombustivel;
 	private boolean jaBateu;
-	private String cor, pneusMarca, estadoProcedencia;
-	private LocalDate ultimaRevisao, dataCompra, dataPneus, hoje;
+	private String cor, estadoProcedencia;
+	private LocalDate ultimaRevisao, dataCompra, hoje;
 
-	public void abastecer(double litros) {
-
+	public Carro(int anoModelo, double precoCompra, double tanque, double nivelCombustivel, boolean jaBateu, String cor,
+			String estadoProcedencia, LocalDate ultimaRevisao, LocalDate dataCompra) {
+		this.anoModelo = anoModelo;
+		this.precoCompra = precoCompra;
+		this.tanque = tanque;
+		this.nivelCombustivel = nivelCombustivel;
+		this.jaBateu = jaBateu;
+		this.cor = cor;
+		this.estadoProcedencia = estadoProcedencia;
+		this.ultimaRevisao = ultimaRevisao;
+		this.dataCompra = dataCompra;
 	}
 
-	public double setPrecoVenda(double precoCompra) {
+	public int getAnoModelo() {
+		return anoModelo;
+	}
+
+	public double getPrecoCompra() {
+		return precoCompra;
+	}
+
+	public double getPrecoVenda() {
+		return precoVenda;
+	}
+
+	public double getTanque() {
+		return tanque;
+	}
+
+	public double getNivelCombustivel() {
+		return nivelCombustivel;
+	}
+
+	public boolean isJaBateu() {
+		return jaBateu;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public String getEstadoProcedencia() {
+		return estadoProcedencia;
+	}
+
+	public LocalDate getUltimaRevisao() {
+		return ultimaRevisao;
+	}
+
+	public LocalDate getDataCompra() {
+		return dataCompra;
+	}
+
+	public LocalDate getHoje() {
+		return hoje;
+	}
+
+	public void setAnoModelo(int anoModelo) {
+		this.anoModelo = anoModelo;
+	}
+
+	public void setPrecoCompra(double precoCompra) {
+		this.precoCompra = precoCompra;
+	}
+
+	public void setTanque(double tanque) {
+		this.tanque = tanque;
+	}
+
+	public void setNivelCombustivel(double nivelCombustivel) {
+		this.nivelCombustivel = nivelCombustivel;
+	}
+
+	public void setJaBateu(boolean jaBateu) {
+		this.jaBateu = jaBateu;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public void setEstadoProcedencia(String estadoProcedencia) {
+		this.estadoProcedencia = estadoProcedencia;
+	}
+
+	public void setUltimaRevisao(LocalDate ultimaRevisao) {
+		this.ultimaRevisao = ultimaRevisao;
+	}
+
+	public void setDataCompra(LocalDate dataCompra) {
+		this.dataCompra = dataCompra;
+	}
+
+	public void setHoje(LocalDate hoje) {
+		this.hoje = hoje;
+	}
+
+	public void setPrecoVenda(double precoCompra) {
+		int idadeCarro = hoje.getYear() - anoModelo;
+
 		if (jaBateu) {
-
-		} else if (anoFabricacao <= 3) {
-			// - Divida o valor do carro zero km (exemplo: R$35.000) por 5, ​para saber o
-			// valor anual de depreciação (R$35.000 / 5 = R$7.000);
-			// - Divida esse valor (R$7.000) por 12, que é o número de meses do ano; ​
-			// ​- O valor obtido (R$583,33) representa o quanto o carro vai desvalorizar a
-			// cada mês. Ou seja, depois de sair da concessionária, você pode considerar
-			// que, a cada mês, o carro em questão depreciará aproximadamente R$580. A conta
-			// é fácil, não é? ​
+			this.precoVenda = precoCompra - (((precoCompra / 5) / 12) * (idadeCarro * 12) * 0.75);
+		} else if (idadeCarro <= 3) {
+			this.precoVenda = precoCompra - ((precoCompra / 5) / 12) * (idadeCarro * 12);
 		} else {
-
+			this.precoVenda = precoCompra - ((precoCompra * 0.4) * (idadeCarro * 0.95));
 		}
-		return this.precoVenda;
 	}
 
 	public void revisao() {
-
+		this.ultimaRevisao = hoje;
 	}
 
 	public boolean aptoViajar(LocalDate ultimaRevisao) {
-		int periodo = ultimaRevisao.getDayOfYear() - hoje.getDayOfYear();
-		if (periodo >= 1) {
+		long periodo = hoje.toEpochDay() - ultimaRevisao.toEpochDay();
+		if (periodo >= 365) {
 			return false;
-
 		} else {
 			return true;
 		}
 	}
 
-	public tanqueCheio() {
-		
+	public String abastecer(int quantidade) {
+		String resp;
+		if (nivelCombustivel == tanque) {
+			resp = "Tanque já está cheio!";
+		} else if (nivelCombustivel < tanque) {
+			double quantAbastecida;
+			if (quantidade > tanque) {
+				quantAbastecida = tanque - nivelCombustivel;
+				resp = "Foi abastecido " + quantAbastecida;
+			} else if (nivelCombustivel + quantidade <= tanque) {
+				nivelCombustivel += quantidade;
+				resp = "Foi abastecido" + quantidade;
+			} else if (nivelCombustivel + quantidade > tanque) {
+				quantAbastecida = tanque - nivelCombustivel;
+				resp = "Foi abastecido" + quantAbastecida;
+			} else {
+				resp = "Tanque já está cheio!";
+			}
+		} else {
+			resp = "Tanque já está cheio!";
+		}
+		return resp;
 	}
 }
