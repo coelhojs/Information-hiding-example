@@ -1,4 +1,4 @@
-package Concessionária;
+package Concessionï¿½ria;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,13 +11,13 @@ public class Concessionaria implements NotaFiscal {
 	public void emitirNF(LocalDate hoje) {
 		hoje = LocalDate.now();
 	}
-
+//ed
 	public static void main(String[] args) throws Exception {
 		List<Item> lista = new ArrayList<Item>();
 
 		Carro carro1 = new Carro("Fiat Punto", 37.100, "Verde", 2013);
 		Peca peca1 = new Peca("cambio", 400.00, "nova", hoje.plusDays(365));
-		Servico servico1 = new Servico("Troca de óleo", 200.00);
+		Servico servico1 = new Servico("Troca de ï¿½leo", 200.00);
 		Carro carro2 = new Carro("Ford Ecosport", 19.940, "Preto", 2004);
 		Peca peca2 = new Peca("Kit freio", 400.00, "usada", hoje.plusDays(90));
 		Servico servico2 = new Servico("Balanceamento", 60.00);
