@@ -2,9 +2,9 @@
 //AvoidPublicFields OK
 //DontReturnMutableCollectionsOrArrays
 //AvoidUncheckedParametersOfSetters OK
-//UseInterfacesAsReturnType
-//AvoidProtectedFields
-//AvoidSettersForHeavilyUsedFields
+//UseInterfacesAsReturnType 
+//AvoidProtectedFields OK
+//AvoidSettersForHeavilyUsedFields 
 //AvoidManySetters
 //AvoidManyGetters
 //UseImmutableObjects
@@ -16,19 +16,17 @@
 
 import java.time.LocalDate;
 
-public class Carro {
+public class Carro implements Tanque {
 	private int anoModelo;
-	private double precoCompra, precoVenda, tanque, nivelCombustivel;
-	private boolean jaBateu;
+	private double precoCompra, precoVenda;
+	private boolean jaBateu, tanque, nivelCombustivel;
 	private String cor, estadoProcedencia;
 	private LocalDate ultimaRevisao, dataCompra, hoje;
 
-	public Carro(int anoModelo, double precoCompra, double tanque, double nivelCombustivel, boolean jaBateu, String cor,
-			String estadoProcedencia, LocalDate ultimaRevisao, LocalDate dataCompra) {
+	public Carro(int anoModelo, double precoCompra, boolean jaBateu, String cor, String estadoProcedencia,
+			LocalDate ultimaRevisao, LocalDate dataCompra) {
 		this.anoModelo = anoModelo;
 		this.precoCompra = precoCompra;
-		this.tanque = tanque;
-		this.nivelCombustivel = nivelCombustivel;
 		this.jaBateu = jaBateu;
 		this.cor = cor;
 		this.estadoProcedencia = estadoProcedencia;
@@ -46,14 +44,6 @@ public class Carro {
 
 	public double getPrecoVenda() {
 		return precoVenda;
-	}
-
-	public double getTanque() {
-		return tanque;
-	}
-
-	public double getNivelCombustivel() {
-		return nivelCombustivel;
 	}
 
 	public boolean isJaBateu() {
@@ -88,14 +78,6 @@ public class Carro {
 		this.precoCompra = precoCompra;
 	}
 
-	public void setTanque(double tanque) {
-		this.tanque = tanque;
-	}
-
-	public void setNivelCombustivel(double nivelCombustivel) {
-		this.nivelCombustivel = nivelCombustivel;
-	}
-
 	public void setJaBateu(boolean jaBateu) {
 		this.jaBateu = jaBateu;
 	}
@@ -118,6 +100,32 @@ public class Carro {
 
 	public void setHoje(LocalDate hoje) {
 		this.hoje = hoje;
+	}
+
+	public String abastecer(int quantidade) {
+		{
+			String resp;
+			if (nivelCombustivel == tanque) {
+				resp = "Tanque já está cheio!";
+			} else if (nivelCombustivel < tanque) {
+				double quantAbastecida;
+				if (quantidade > tanque) {
+					quantAbastecida = tanque - nivelCombustivel;
+					resp = "Foi abastecido " + quantAbastecida;
+				} else if (nivelCombustivel + quantidade <= tanque) {
+					nivelCombustivel += quantidade;
+					resp = "Foi abastecido" + quantidade;
+				} else if (nivelCombustivel + quantidade > tanque) {
+					quantAbastecida = tanque - nivelCombustivel;
+					resp = "Foi abastecido" + quantAbastecida;
+				} else {
+					resp = "Tanque já está cheio!";
+				}
+			} else {
+				resp = "Tanque já está cheio!";
+			}
+			return resp;
+		}
 	}
 
 	public void setPrecoVenda(double precoCompra) {
@@ -145,27 +153,4 @@ public class Carro {
 		}
 	}
 
-	public String abastecer(int quantidade) {
-		String resp;
-		if (nivelCombustivel == tanque) {
-			resp = "Tanque já está cheio!";
-		} else if (nivelCombustivel < tanque) {
-			double quantAbastecida;
-			if (quantidade > tanque) {
-				quantAbastecida = tanque - nivelCombustivel;
-				resp = "Foi abastecido " + quantAbastecida;
-			} else if (nivelCombustivel + quantidade <= tanque) {
-				nivelCombustivel += quantidade;
-				resp = "Foi abastecido" + quantidade;
-			} else if (nivelCombustivel + quantidade > tanque) {
-				quantAbastecida = tanque - nivelCombustivel;
-				resp = "Foi abastecido" + quantAbastecida;
-			} else {
-				resp = "Tanque já está cheio!";
-			}
-		} else {
-			resp = "Tanque já está cheio!";
-		}
-		return resp;
-	}
 }
