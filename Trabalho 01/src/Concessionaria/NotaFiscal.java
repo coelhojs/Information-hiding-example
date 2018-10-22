@@ -1,8 +1,9 @@
 package Concessionaria;
 
-public class NotaFiscal {
+import java.time.LocalDate;
 
-    private Cliente cliente;
+public interface NotaFiscal {
+	public void emitirNF(LocalDate hoje);
 
-
+	public LocalDate hoje = LocalDate.now();
 }

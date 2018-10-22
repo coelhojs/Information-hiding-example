@@ -1,42 +1,31 @@
 package Concessionaria;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public abstract class Peça {
-    private int codigo;
-    private double preco;
-    private Date garantia;
+public class Peca extends Item {
+	private String tipo;
+	private LocalDate garantia;
 
-    public Peça() {
-    }
+	public Peca(String nome, double preco, String tipo, LocalDate garantia) {
+		super(nome, preco);
+		this.tipo = tipo;
+		this.garantia = garantia;
+	}
 
-    public Peça(int codigo, double preco, Date garantia) {
-        this.codigo = codigo;
-        this.preco = preco;
-        this.garantia = garantia;
-    }
+	public String getTipo() {
+		return tipo;
+	}
 
-    public int getCodigo() {
-        return codigo;
-    }
+	public LocalDate getGarantia() {
+		return garantia;
+	}
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
-    public double getPreco() {
-        return preco;
-    }
+	public void setGarantia(LocalDate garantia) {
+		this.garantia = garantia;
+	}
 
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
-    public Date getGarantia() {
-        return garantia;
-    }
-
-    public void setGarantia(Date garantia) {
-        this.garantia = garantia;
-    }
 }
